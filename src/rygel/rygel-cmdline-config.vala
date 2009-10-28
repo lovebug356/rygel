@@ -40,6 +40,7 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
     private static bool no_mp3_trans;
     private static bool no_mp2ts_trans;
     private static bool no_lpcm_trans;
+    private static bool enable_subtitles;
 
     private static LogLevel log_level = LogLevel.INVALID;
 
@@ -59,7 +60,7 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
     private static CmdlineConfig config;
 
     // Command-line options
-	const OptionEntry[] options = {
+    const OptionEntry[] options = {
         { "version", 0, 0, OptionArg.NONE, ref version,
           "Display version number", null },
         { "network-interface", 'n', 0, OptionArg.STRING, ref iface,
@@ -75,6 +76,8 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
           "Disable mpeg2 transport stream transcoder", null },
         { "disable-lpcm-transcoder", 'l', 0, OptionArg.NONE, ref no_lpcm_trans,
           "Disable Linear PCM transcoder", null },
+        { "enable-subtitles", 'u', 0, OptionArg.NONE, ref enable_subtitles,
+          "Enable subtitle support", null },
         { "log-level", 'g', 0, OptionArg.INT, ref log_level,
           "Log level. 1=critical,2=error,3=warning,4=message/info,5=debug",
           "N" },
@@ -86,7 +89,7 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
         { "plugin-option", 'o', 0, OptionArg.STRING_ARRAY, ref plugin_options,
           "Set plugin options", "PluginName:OPTION:VALUE1[,VALUE2,..]" },
         { null }
-	};
+    };
 
     public static CmdlineConfig get_default () {
         if (config == null) {
@@ -147,6 +150,10 @@ public class Rygel.CmdlineConfig : GLib.Object, Configuration {
 
     public bool get_lpcm_transcoder () throws GLib.Error {
         return !no_lpcm_trans;
+    }
+
+    public bool get_enable_subtitles () throws GLib.Error {
+        return enable_subtitles;
     }
 
     public LogLevel get_log_level () throws GLib.Error {

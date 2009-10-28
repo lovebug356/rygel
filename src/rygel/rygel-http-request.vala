@@ -164,6 +164,8 @@ internal class Rygel.HTTPRequest : GLib.Object, Rygel.StateMachine {
 
         this.item_id = this.query.lookup ("itemid");
         var target = this.query.lookup ("transcode");
+        /* REMOVE_ME: FORCE TRANSCODING */
+        target = "MPEG_TS_HD_US";
         if (target != null) {
             debug ("Transcoding target: %s", target);
 

@@ -191,6 +191,20 @@ public class Rygel.MetaConfig : GLib.Object, Configuration {
         return val;
     }
 
+    public bool get_enable_subtitles () throws GLib.Error {
+        bool val = false;
+
+        foreach (var config in this.configs) {
+            try {
+                val = config.get_enable_subtitles ();
+                if (val)
+                  break;
+            } catch (GLib.Error err) {}
+        }
+
+        return val;
+    }
+
     public LogLevel get_log_level () throws GLib.Error {
         LogLevel val = LogLevel.DEFAULT;
         bool unavailable = true;

@@ -40,6 +40,7 @@ public class Rygel.UserConfig : GLib.Object, Configuration {
     protected static const string LPCM_TRANSCODER_KEY =
                                                     "enable-lpcm-transcoder";
     protected static const string LOG_LEVEL_KEY = "log-level";
+    protected static const string SUBTITLE_KEY = "enable-subtitles";
 
     private const string DBUS_SERVICE = "org.freedesktop.DBus";
     private const string DBUS_PATH = "/org/freedesktop/DBus";
@@ -120,6 +121,14 @@ public class Rygel.UserConfig : GLib.Object, Configuration {
 
     public void set_lpcm_transcoder (bool value) {
         this.set_bool ("general", LPCM_TRANSCODER_KEY, value);
+    }
+
+    public bool get_enable_subtitles () throws GLib.Error {
+      return this.get_bool ("general", SUBTITLE_KEY);
+    }
+
+    public void set_enable_subtitles (bool value) {
+      this.set_bool ("general", SUBTITLE_KEY, value);
     }
 
     public LogLevel get_log_level () throws GLib.Error {

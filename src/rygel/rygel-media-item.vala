@@ -62,6 +62,7 @@ public class Rygel.MediaItem : MediaObject {
     public int pixel_width = -1;
     public int pixel_height = -1;
     public int color_depth = -1;
+    public HashMap<string, string> subtitles;
 
     public ArrayList<Thumbnail> thumbnails;
 
@@ -74,7 +75,20 @@ public class Rygel.MediaItem : MediaObject {
         this.title = title;
         this.upnp_class = upnp_class;
 
+        this.subtitles = new HashMap<string, string> ();
         this.thumbnails = new ArrayList<Thumbnail> ();
+    }
+
+    public string? subtitle_uri {
+      owned get {
+          if (uris.size > 0) {
+              var uri = uris.get (0);
+              if (subtitles.has_key (uri)) {
+                  return subtitles.get (uri);
+              }
+          }
+          return null;
+      }
     }
 
     // Live media items need to provide a nice working implementation of this
@@ -107,7 +121,19 @@ public class Rygel.MediaItem : MediaObject {
     // ask Rygel to try to fetch it for you by passing null as @thumbnail.
     public void add_uri (string     uri,
                          Thumbnail? thumbnail) {
+        var config =  MetaConfig.get_default ();
         this.uris.add (uri);
+
+        try {
+          if (config.get_enable_subtitles ()) {
+            string? subtitle_filename = Subtitles.get_subtitle_for_uri (uri);
+            if (subtitle_filename != null) {
+              this.subtitles.set (uri, subtitle_filename);
+            }
+          }
+        } catch (Error err) {
+          warning ("failed to find subtitles: %s", err.message);
+        }
 
         if (thumbnail != null) {
             this.thumbnails.add (thumbnail);

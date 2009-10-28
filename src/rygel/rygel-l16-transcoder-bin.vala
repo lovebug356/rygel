@@ -28,8 +28,6 @@ using Gst;
  * decodebin2) to linear PCM audio.
  */
 internal class Rygel.L16TranscoderBin : Gst.Bin {
-    private const string DECODEBIN = "decodebin2";
-
     private const string AUDIO_SRC_PAD = "audio-src-pad";
     private const string AUDIO_SINK_PAD = "audio-sink-pad";
 
@@ -38,7 +36,7 @@ internal class Rygel.L16TranscoderBin : Gst.Bin {
     public L16TranscoderBin (MediaItem     item,
                              Element       src,
                              L16Transcoder transcoder) throws Error {
-        Element decodebin = GstUtils.create_element (DECODEBIN, DECODEBIN);
+        Element decodebin = new Rygel.DecoderBin ();
 
         this.audio_enc = transcoder.create_encoder (item,
                                                     AUDIO_SRC_PAD,

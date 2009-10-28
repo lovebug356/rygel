@@ -33,8 +33,6 @@ internal enum Rygel.MP3Layer {
  * decodebin2) to mpeg 1 layer 2 and 3 format.
  */
 internal class Rygel.MP3TranscoderBin : Gst.Bin {
-    private const string DECODEBIN = "decodebin2";
-
     private const string AUDIO_SRC_PAD = "audio-src-pad";
     private const string AUDIO_SINK_PAD = "audio-sink-pad";
 
@@ -43,7 +41,7 @@ internal class Rygel.MP3TranscoderBin : Gst.Bin {
     public MP3TranscoderBin (MediaItem     item,
                              Element       src,
                              MP3Transcoder transcoder) throws Error {
-        Element decodebin = GstUtils.create_element (DECODEBIN, DECODEBIN);
+        Element decodebin = new Rygel.DecoderBin ();
 
         this.audio_enc = transcoder.create_encoder (item,
                                                     AUDIO_SRC_PAD,

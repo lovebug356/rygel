@@ -28,7 +28,6 @@ using Gst;
  * decodebin2) to mpeg transport stream containing mpeg 2 video and mp2 audio.
  */
 internal class Rygel.MP2TSTranscoderBin : Gst.Bin {
-    private const string DECODEBIN = "decodebin2";
     private const string MUXER = "mpegtsmux";
 
     private const string AUDIO_ENC_SINK = "audio-enc-sink-pad";
@@ -42,7 +41,7 @@ internal class Rygel.MP2TSTranscoderBin : Gst.Bin {
                                Element         src,
                                MP2TSTranscoder transcoder)
                                throws Error {
-        Element decodebin = GstUtils.create_element (DECODEBIN, DECODEBIN);
+        Element decodebin = new Rygel.DecoderBin (item.subtitle_uri);
         var mp3_transcoder = new MP3Transcoder (MP3Layer.TWO);
         this.audio_enc = mp3_transcoder.create_encoder (item,
                                                         null,

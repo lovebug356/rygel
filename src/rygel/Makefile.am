@@ -84,7 +84,9 @@ VAPI_SOURCE_FILES = rygel-configuration.vala \
 		    rygel-metadata-extractor.vala \
 		    rygel-media-db-container.vala \
 		    rygel-media-db-object-factory.vala \
-		    rygel-log-handler.vala
+		    rygel-log-handler.vala \
+		    rygel-subtitles.vala \
+		    rygel-decoder-bin.vala
 
 rygel_VALAFLAGS = \
 	-H rygel.h -C --library=rygel-1.0 --vapidir=$(srcdir) --thread \
